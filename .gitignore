@@ -1,0 +1,21 @@
+# macOS
+.DS_Store
+**/.DS_Store
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+.project
+.classpath
+.settings/
+
+# Java/Build
+target/
+bin/
+out/
+*.class
+*.log
+
+# Node (if any)
+node_modules/

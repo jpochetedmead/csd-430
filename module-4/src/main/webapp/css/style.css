@@ -1,0 +1,90 @@
+/* 
+  Author: Julio Pochet | Module 2 CSS
+  Purpose: very simple styling so the tables are easy to read.
+*/
+:root { --edge:#e6e9ef; --ink:#222; --muted:#666; --brand:#2f6fec; --bg:#f7f8fb; }
+* { box-sizing: border-box; }
+html, body { margin:0; padding:0; }
+body {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.5;
+  padding: 24px;
+}
+
+.page-head { margin: 0 0 1rem; }
+.page-head h1 { margin: 0 0 .25rem; }
+.subtitle { color: var(--muted); margin: 0; }
+
+.group { 
+  background: #fff; 
+  border: 1px solid var(--edge); 
+  border-radius: 10px; 
+  padding: 16px; 
+  margin: 18px auto; 
+  max-width: 960px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.03);
+}
+.group-title { margin: 0 0 .25rem; }
+.group-note { color: var(--muted); margin: 0 0 .75rem; }
+
+.nice-table { 
+  border-collapse: collapse; 
+  width: 100%; 
+  overflow: hidden; 
+  border: 1px solid var(--edge);
+  border-radius: 8px;
+}
+.nice-table thead th {
+  background: var(--brand);
+  color: #fff;
+  text-align: left;
+  padding: 10px 12px;
+}
+.nice-table td {
+  padding: 12px;
+  border-top: 1px solid var(--edge);
+}
+.nice-table tbody tr:nth-child(odd) { background: #fbfcff; }
+.nice-table tbody tr:hover { background: #f2f6ff; }
+
+.page-foot {
+  text-align: center;
+  color: var(--muted);
+  margin-top: 28px;
+  font-size: .95rem;
+}
+
+
+/* === Form-specific helper styles === */
+.form-stack label { 
+  display: block; 
+  margin: .65rem 0; 
+}
+
+.form-stack input, 
+.form-stack select, 
+.form-stack textarea {
+  width: 100%; 
+  padding: .6rem .7rem; 
+  border: 1px solid var(--edge); 
+  border-radius: 8px;
+}
+
+.actions { 
+  margin-top: .75rem; 
+}
+
+.actions button {
+  padding: .6rem 1rem; 
+  border: 0; 
+  border-radius: 8px; 
+  background: var(--brand); 
+  color: #fff; 
+  cursor: pointer;
+}
+
+.actions button:hover { 
+  opacity: .9; 
+}
