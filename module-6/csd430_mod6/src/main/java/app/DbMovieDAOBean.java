@@ -1,8 +1,8 @@
 /*
  * Name: Julio Pochet Edmead
- * Date: 09/21/2025
- * Assignment: CSD430 – Modules 6–8 (Project Parts 1–3)
- * Purpose: JDBC helper bean to create/seed/drop the table and perform CRUD (READ/CREATE/UPDATE).
+ * Date: 09/28/2025
+ * Assignment: CSD430 – Modules 6–9 (Project Parts 1–4)
+ * Purpose: JDBC helper bean to create/seed/drop the table and perform CRUD (READ/CREATE/UPDATE/DELETE).
  */
 
 package app;
@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DbMovieDAOBean {
+
     // Connection info for local MySQL per assignment
     private final String url  = "jdbc:mysql://localhost:3306/CSD430?useSSL=false&allowPublicKeyRetrieval=true";
     private final String user = "student1";
@@ -21,7 +22,9 @@ public class DbMovieDAOBean {
         Class.forName("com.mysql.cj.jdbc.Driver");
     }
 
-    // ----- Admin (DDL) -----
+    // =========================
+    // Admin (DDL)
+    // =========================
     public void createTable() throws Exception {
         loadDriver();
         String ddl =
@@ -51,10 +54,12 @@ public class DbMovieDAOBean {
         loadDriver();
         try (Connection c = DriverManager.getConnection(url, user, pass);
              Statement st = c.createStatement()) {
+
             try (ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM julio_movies_data")) {
                 rs.next();
-                if (rs.getInt(1) > 0) return; // already has rows
+                if (rs.getInt(1) > 0) return; // already seeded
             }
+
             String ins =
                 "INSERT INTO julio_movies_data (title, genre, release_year, rating, director) VALUES " +
                 "('Inception','Sci-Fi',2010,8.8,'Christopher Nolan')," +
@@ -71,7 +76,9 @@ public class DbMovieDAOBean {
         }
     }
 
-    // ----- READ helpers -----
+    // =========================
+    // READ helpers
+    // =========================
     public List<Integer> getAllIds() throws Exception {
         loadDriver();
         List<Integer> ids = new ArrayList<>();
@@ -128,7 +135,9 @@ public class DbMovieDAOBean {
         return list;
     }
 
-    // ----- CREATE -----
+    // =========================
+    // CREATE
+    // =========================
     public int insertMovie(MovieBean m) throws Exception {
         loadDriver();
         String sql = "INSERT INTO julio_movies_data (title, genre, release_year, rating, director) " +
@@ -144,11 +153,13 @@ public class DbMovieDAOBean {
             try (ResultSet keys = ps.getGeneratedKeys()) {
                 if (keys.next()) return keys.getInt(1);
             }
-            return -1; // fallback if no key
+            return -1; // no key returned
         }
     }
 
-    // ----- UPDATE -----
+    // =========================
+    // UPDATE
+    // =========================
     public int updateMovie(MovieBean m) throws Exception {
         loadDriver();
         String sql = "UPDATE julio_movies_data " +
@@ -163,6 +174,23 @@ public class DbMovieDAOBean {
             ps.setString(5, m.getDirector());
             ps.setInt(6, m.getMovie_id());
             return ps.executeUpdate(); // 1 if updated, 0 if not found
+        }
+    }
+
+    // =========================
+    // DELETE
+    // =========================
+    /**
+     * Remove a single row by primary key from julio_movies_data.
+     * @return number of rows deleted (1 if success, 0 if not found)
+     */
+    public int deleteMovieById(int id) throws Exception {
+        loadDriver();
+        String sql = "DELETE FROM julio_movies_data WHERE movie_id = ?";
+        try (Connection c = DriverManager.getConnection(url, user, pass);
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            return ps.executeUpdate();
         }
     }
 }

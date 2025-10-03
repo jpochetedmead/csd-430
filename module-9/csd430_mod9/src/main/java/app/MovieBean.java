@@ -2,7 +2,7 @@
  * Name: Julio Pochet Edmead
  * Date: 09/21/2025
  * Assignment: CSD430 – Modules 6–8 (Project Parts 1–3)
- * Purpose: JavaBean representing a movie row.
+ * Purpose: JavaBean representing a movie row...
  */
 package app;
 
